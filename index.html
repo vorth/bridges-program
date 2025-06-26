@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bridges Program POC</title>
+
+  <style>
+    body {
+      margin: auto;
+      max-width: 750px;
+      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+    .has-light-pink-background-color {
+      background-color: #ffe5d1;
+    }
+    .has-light-blue-background-color {
+      background-color: #e9f2f9;
+    }
+    .has-light-gray-background-color {
+      background-color: #f1f1f1;
+    }
+    .day p,
+    .day div {
+      display: none;
+    }
+    .open p,
+    .open div {
+      display: block;
+    }
+    .day h4::before {
+      content: "▶ ";
+      cursor: pointer;
+    }
+    .open h4::before {
+      content: "▼ ";
+      cursor: pointer;
+    }
+  </style>
+
+  <script type="module" src="script.js"></script>
+</head>
+<body>
+  
+</body>
+</html>
