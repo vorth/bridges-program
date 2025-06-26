@@ -21,11 +21,12 @@ fetch( './official-program.html' )
       today.classList.add( 'day' );
       return today;
     }
+    const toggleDay = evt => evt.target.closest( '.day' ).classList.toggle( 'open' );
 
     const intro = document.createElement( 'h4' );
     intro.textContent = 'General Information';
     let day = newDay();
-    intro.addEventListener( 'click', evt => evt.target.parentElement.classList.toggle( 'open' ) );
+    intro.addEventListener( 'click', toggleDay );
     day.appendChild( intro );
 
     const first = schedule.firstElementChild.nextElementSibling; // skip the style element
@@ -37,7 +38,7 @@ fetch( './official-program.html' )
       const next = child.nextElementSibling;
       if ( child.tagName === 'H4' ) {
         day = newDay();
-        child.addEventListener( 'click', evt => evt.target.parentElement.classList.toggle( 'open' ) );
+        child.addEventListener( 'click', toggleDay );
         schedule.replaceChild( day, child );
         day.appendChild( child );
       } else if ( day ) {
