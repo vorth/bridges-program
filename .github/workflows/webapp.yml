@@ -47,14 +47,9 @@ jobs:
       - name: Download official program
         run: |
           curl -o official-program.html https://www.bridgesmathart.org/b2025/bridges-2025-program/
-          # Or save to a variable
-          content=$(curl -s https://example.com)
-          echo "$content" > page.html
       - name: Build with Jekyll
         # Outputs to the './_site' directory by default
         run: |
-          cd website
-          pwd
           bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
           find _site
         env:
