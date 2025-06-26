@@ -46,7 +46,7 @@ jobs:
           cache-version: 0 # Increment this number if you need to re-download cached gems
       - name: Download official program
         run: |
-          curl -o official-program.html https://www.bridgesmathart.org/b2025/bridges-2025-program/
+          wget -O official-program.html https://www.bridgesmathart.org/b2025/bridges-2025-program/
       - name: Build with Jekyll
         # Outputs to the './_site' directory by default
         run: |
