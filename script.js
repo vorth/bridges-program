@@ -7,13 +7,13 @@ fetch( './official-program.html' )
 
     const mainContent = doc.querySelector( 'main' );
 
-    // const sessions = mainContent.querySelectorAll( '.sched_block' );
-    // for ( const session of sessions ) {
-    //   const title = session.querySelector( 'p strong' );
-    //   if ( !!title ) {
-    //     console.log( title.textContent );
-    //   }
-    // }
+    const sessions = mainContent.querySelectorAll( '.sched_block' );
+    for ( const session of sessions ) {
+      const title = session.querySelector( 'p' );
+      if ( !!title ) {
+        console.log( title.textContent );
+      }
+    }
 
     const schedule = doc.querySelector( 'main .entry-content' );
     const newDay = () => {
@@ -22,6 +22,7 @@ fetch( './official-program.html' )
       return today;
     }
     const toggleDay = evt => evt.target.closest( '.day' ).classList.toggle( 'open' );
+    document.getElementById( 'about' ) .addEventListener( 'click', toggleDay );
 
     const intro = document.createElement( 'h4' );
     intro.textContent = 'General Information';
@@ -48,6 +49,5 @@ fetch( './official-program.html' )
     }
 
 
-    document.body.replaceChildren();
     document.body.appendChild( mainContent );
   } );
