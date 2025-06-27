@@ -1,4 +1,12 @@
 
+const isDaySeparator = node => node.tagName === 'H4';
+
+const isTrack = node => {
+  const text = node.textContent.trim();
+  return text.startsWith( '14:00–15:' ) || text.startsWith( '16:00–17:' );
+}
+
+
 fetch( './official-program.html' )
   .then( response => response.text() )
   .then( text => {
@@ -16,33 +24,76 @@ fetch( './official-program.html' )
     }
 
     const schedule = doc.querySelector( 'main .entry-content' );
-    const newDay = () => {
+    const newDay = (text) => {
       const today = document.createElement( 'div' );
-      today.classList.add( 'day' );
+      today.classList.add( 'day', 'toggle' );
+      const intro = document.createElement( 'span' );
+      intro.textContent = text;
+      intro.classList.add( 'day-heading' );
+      intro.addEventListener( 'click', toggleOpen );
+      today.appendChild( intro );
+      const sessions = document.createElement( 'div' );
+      sessions.classList.add( 'sessions' );
+      today.appendChild( sessions );
       return today;
     }
-    const toggleDay = evt => evt.target.closest( '.day' ).classList.toggle( 'open' );
-    document.getElementById( 'about' ) .addEventListener( 'click', toggleDay );
+    const toggleOpen = evt => evt.target.closest( '.toggle' ).classList.toggle( 'open' );
+    document.getElementById( 'about' ) .addEventListener( 'click', toggleOpen );
 
-    const intro = document.createElement( 'h4' );
-    intro.textContent = 'General Information';
-    let day = newDay();
-    intro.addEventListener( 'click', toggleDay );
-    day.appendChild( intro );
+    let parallel = null;
+    const newParallelSession = () => {
+      const parallel = document.createElement( 'div' );
+      parallel.classList.add( 'parallel', 'toggle' );
+      const intro = document.createElement( 'span' );
+      intro.textContent = 'Parallel Tracks';
+      intro.classList.add( 'day-heading' );
+      intro.addEventListener( 'click', toggleOpen );
+      parallel.appendChild( intro );
+      const tracks = document.createElement( 'div' );
+      tracks.classList.add( 'tracks' );
+      parallel.appendChild( tracks );
+      return parallel;
+    }
 
-    const first = schedule.firstElementChild.nextElementSibling; // skip the style element
-    let child = first.nextElementSibling;
-    schedule.replaceChild( day, first );
-    day.appendChild( first );
+    let child = schedule.firstElementChild.nextElementSibling; // skip the style element
+    const next = child.nextElementSibling;
+
+    let day = newDay( 'General Information' );
+    schedule.replaceChild( day, child );
+    day = day.firstElementChild.nextElementSibling; // sessions
+    day.appendChild( child );
+    child = next;
 
     while ( child ) {
       const next = child.nextElementSibling;
-      if ( child.tagName === 'H4' ) {
-        day = newDay();
-        child.addEventListener( 'click', toggleDay );
+
+      if ( isDaySeparator( child ) )
+      {
+        day = newDay( child.textContent.trim() );
         schedule.replaceChild( day, child );
+        day = day.firstElementChild.nextElementSibling; // sessions
+      }
+      else if ( parallel===null && isTrack( child ) )
+      {
+        // start parallel tracks
+        parallel = newParallelSession();
+        day.appendChild( parallel );
+        parallel = parallel.firstElementChild.nextElementSibling; // tracks
+        parallel.appendChild( child );
+      }
+      else if ( parallel!==null && !isTrack(child) )
+      {
+        // end parallel tracks
         day.appendChild( child );
-      } else if ( day ) {
+        parallel = null;
+      }
+      else if ( parallel!==null )
+      {
+        // add to parallel tracks
+        parallel.appendChild( child );
+      }
+      else
+      {
         day.appendChild( child );
       }
       child = next;
