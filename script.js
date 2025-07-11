@@ -86,6 +86,16 @@ fetch( './official-program.html' )
       return parallel;
     }
 
+    const markRegularTalks = track => {
+      const heading = track.querySelector( 'div p' );
+      if ( heading && ( heading.textContent.includes( 'Regular' ) ) ) {
+        const talks = track.querySelectorAll( 'li' );
+        for ( const talk of talks ) {
+          talk.classList.add( 'regular-talk' );
+        }
+      }
+    }
+
     let child = schedule.firstElementChild.nextElementSibling; // skip the style element
     const next = child.nextElementSibling;
 
@@ -111,6 +121,8 @@ fetch( './official-program.html' )
         day.appendChild( parallel );
         parallel = parallel.querySelector( '.tracks' ); // tracks
         parallel.appendChild( child );
+        child.classList.add('track');
+        markRegularTalks( child )
       }
       else if ( parallel!==null && !isTrack(child) )
       {
@@ -122,6 +134,8 @@ fetch( './official-program.html' )
       {
         // add to parallel tracks
         parallel.appendChild( child );
+        child.classList.add('track');
+        markRegularTalks( child )
       }
       else
       {

@@ -3,19 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bridges Program POC</title>
+  <title>Bridges 2025 Program</title>
 
   <style>
     body {
       margin: 0.5rem;
       max-width: 750px;
       font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    }
-
-    @media (min-width: 768px) {
-      body {
-        margin: auto;
-      }
     }
     
     .has-light-pink-background-color {
@@ -61,7 +55,7 @@
     }
     .tracks {
       display: grid;
-      grid-template-columns: 100% 100% 100% 100% 100% 100%;
+      grid-template-columns: repeat(6,100%);
     }
     .tracks > * {
       width: 96%;
@@ -89,6 +83,31 @@
       border-radius: 3px;
       cursor: pointer;
       padding: 0.2em 0.6em;
+    }
+
+    .track ul {
+      display: grid;
+      grid-template-rows: repeat(6,6.4em);
+      gap: 5px;
+      list-style-type: none;
+      padding-inline-start: 0;
+      margin-inline-start: 0;
+    }
+    .track li {
+      border: 1px solid lightgray;
+      padding: 5px;
+    }
+    .regular-talk {
+      grid-row: span 2;
+    }
+
+    @media (min-width: 768px) {
+      body {
+        margin: auto;
+      }
+      .track ul {
+        grid-template-rows: repeat(6,4em);
+      }
     }
   </style>
 
