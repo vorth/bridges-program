@@ -1,4 +1,3 @@
-
 const isDaySeparator = node => node.tagName === 'H4';
 
 const isTrack = node => {
@@ -15,22 +14,14 @@ fetch( './official-program.html' )
 
     const mainContent = doc.querySelector( 'main' );
 
-    const sessions = mainContent.querySelectorAll( '.sched_block' );
-    for ( const session of sessions ) {
-      const title = session.querySelector( 'p' );
-      if ( !!title ) {
-        console.log( title.textContent );
-      }
-    }
-
     const schedule = doc.querySelector( 'main .entry-content' );
     const newDay = (text) => {
       const today = document.createElement( 'div' );
       today.classList.add( 'day', 'toggle' );
-      const intro = document.createElement( 'span' );
+      const intro = document.createElement( 'div' );
       intro.textContent = text;
       intro.classList.add( 'day-heading' );
-      today.addEventListener( 'click', toggleOpen );
+      intro.addEventListener( 'click', toggleOpen );
       today.appendChild( intro );
       const sessions = document.createElement( 'div' );
       sessions.classList.add( 'sessions' );
@@ -39,23 +30,59 @@ fetch( './official-program.html' )
     }
     const toggleOpen = evt => {
       evt.stopPropagation();
-      const classlist = evt.target.closest( '.toggle' ).classList;
-      classlist .toggle( 'open' );
+      const thisToggle = evt.target.closest( '.toggle' );
+      const toggles = document.querySelectorAll( '.toggle' );
+      for ( const toggle of toggles ) {
+        if ( toggle !== thisToggle )
+          toggle.classList.remove( 'open' );
+      }
+      thisToggle.classList .toggle( 'open' );
     }
     document.getElementById( 'about' ) .addEventListener( 'click', toggleOpen );
 
     let parallel = null;
     const newParallelSession = () => {
-      const parallel = document.createElement( 'div' );
-      parallel.classList.add( 'parallel', 'toggle' );
-      const intro = document.createElement( 'span' );
+      const parallel = document.createElement('div');
+      parallel.classList.add('parallel');
+      const intro = document.createElement('div');
       intro.textContent = 'Parallel Tracks';
-      intro.classList.add( 'day-heading' );
-      parallel.addEventListener( 'click', toggleOpen );
-      parallel.appendChild( intro );
-      const tracks = document.createElement( 'div' );
-      tracks.classList.add( 'tracks' );
-      parallel.appendChild( tracks );
+
+      // Navigation buttons
+      const nav = document.createElement('div');
+      nav.classList.add('track-nav');
+      const leftBtn = document.createElement('button');
+      leftBtn.innerHTML = '◀';
+      leftBtn.className = 'track-left';
+      const rightBtn = document.createElement('button');
+      rightBtn.innerHTML = '▶';
+      rightBtn.className = 'track-right';
+      nav.appendChild(leftBtn);
+      nav.appendChild(intro);
+      nav.appendChild(rightBtn);
+      parallel.appendChild(nav);
+
+      const tracks = document.createElement('div');
+      tracks.classList.add('tracks');
+      parallel.appendChild(tracks);
+
+
+      // Track navigation logic
+      let current = 0;
+      leftBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        // showTrack(current - 1, -1);
+      });
+      rightBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        // showTrack(current + 1, 1);
+      });
+
+      // Initial state
+      setTimeout(() => {
+        // updateTracksMinHeight();
+        // showTrack(0, 0);
+      }, 0);
+
       return parallel;
     }
 
@@ -82,7 +109,7 @@ fetch( './official-program.html' )
         // start parallel tracks
         parallel = newParallelSession();
         day.appendChild( parallel );
-        parallel = parallel.firstElementChild.nextElementSibling; // tracks
+        parallel = parallel.querySelector( '.tracks' ); // tracks
         parallel.appendChild( child );
       }
       else if ( parallel!==null && !isTrack(child) )

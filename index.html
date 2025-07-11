@@ -7,10 +7,17 @@
 
   <style>
     body {
-      margin: auto;
+      margin: 0.5rem;
       max-width: 750px;
       font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     }
+
+    @media (min-width: 768px) {
+      body {
+        margin: auto;
+      }
+    }
+    
     .has-light-pink-background-color {
       background-color: #ffe5d1;
     }
@@ -21,25 +28,23 @@
       background-color: #f1f1f1;
     }
 
-    .toggle > .sessions,
-    .toggle > .tracks {
+    .toggle > .sessions {
       display: none;
     }
-    .open > .sessions,
-    .open > .tracks {
+    .open > .sessions {
       margin-top: 1em;
       display: block;
     }
-    .toggle::before {
+    .day-heading::before {
       content: "▶ ";
       cursor: pointer;
     }
-    .open::before {
+    .open > .day-heading::before {
       content: "▼ ";
       cursor: pointer;
     }
     .parallel {
-      border: 2px solid #888;
+      border: 1px solid lightgray;
       margin: 5px;
       padding: 5px;
     }
@@ -50,28 +55,60 @@
       margin-bottom: 0.5em;
     }
     .day {
-      margin-top: 1.5em;
+      margin-top: 0.7em;
       margin-bottom: 0.5em;
+      border-block-start: 4px solid lightgray;
+    }
+    .tracks {
+      display: grid;
+      grid-template-columns: 100% 100% 100% 100% 100% 100%;
+    }
+    .tracks > * {
+      width: 96%;
+      left: 0;
+    }
+    .tracks > .active-track {
+      display: flex;
+      transform: translateX(0);
+      position: relative;
+      z-index: 2;
+    }
+    .track-nav > div {
+      align-content: center;
+    }
+    .track-nav {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5em;
+      margin-bottom: 0.5em;
+    }
+    .track-nav button {
+      font-size: 1.2em;
+      background: #eee;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      cursor: pointer;
+      padding: 0.2em 0.6em;
     }
   </style>
 
   <script type="module" src="script.js"></script>
 </head>
 <body>
-  <div id="about" class="day toggle">
-    <span class="day-heading">About this App</span>
+  <div class="day toggle">
+    <div id="about" class="day-heading">About this App</div>
     <div class="sessions toggled">
       <div class="wp-block-group sched_block has-background" style="background-color:#59c2a233">
         <div class="wp-block-group__inner-container is-layout-flow wp-block-group-is-layout-flow">
           <p>
             This is a copy of the 
             <a href="https://www.bridgesmathart.org/b2025/bridges-2025-program/" target="_blank" rel="noopener noreferrer">official Bridges 2025 program</a>,
-            updated daily, but rearranged on the page for a better user experience.
+            but rearranged on the page for a better user experience.  This copy is updated daily from the official program.
           </p>
           <p>
-            <em>This is a work-in-progress!</em>
-            I have just started, and there is much more I can improve, working toward a better overall layout and user experience.
-            Reload for updates, and please, <a href="mailto:scott@vorthmann.org">share your suggestions.</a>.
+            <em>This is a work-in-progress!</em> Reload the page for the latest improvements.
+            I am working toward a better overall layout and user experience.
+            Please <a href="mailto:scott@vorthmann.org">share your suggestions</a>.
           </p>
           <p>
             The source code can be
