@@ -30,14 +30,18 @@ fetch( './official-program.html' )
       const intro = document.createElement( 'span' );
       intro.textContent = text;
       intro.classList.add( 'day-heading' );
-      intro.addEventListener( 'click', toggleOpen );
+      today.addEventListener( 'click', toggleOpen );
       today.appendChild( intro );
       const sessions = document.createElement( 'div' );
       sessions.classList.add( 'sessions' );
       today.appendChild( sessions );
       return today;
     }
-    const toggleOpen = evt => evt.target.closest( '.toggle' ).classList.toggle( 'open' );
+    const toggleOpen = evt => {
+      evt.stopPropagation();
+      const classlist = evt.target.closest( '.toggle' ).classList;
+      classlist .toggle( 'open' );
+    }
     document.getElementById( 'about' ) .addEventListener( 'click', toggleOpen );
 
     let parallel = null;
@@ -47,7 +51,7 @@ fetch( './official-program.html' )
       const intro = document.createElement( 'span' );
       intro.textContent = 'Parallel Tracks';
       intro.classList.add( 'day-heading' );
-      intro.addEventListener( 'click', toggleOpen );
+      parallel.addEventListener( 'click', toggleOpen );
       parallel.appendChild( intro );
       const tracks = document.createElement( 'div' );
       tracks.classList.add( 'tracks' );
