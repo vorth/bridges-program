@@ -1,3 +1,6 @@
+
+import { lastBuild } from './timestamp.js';
+
 const isDaySeparator = node => node.tagName === 'H4';
 
 const isTrack = node => {
@@ -146,4 +149,6 @@ fetch( './official-program.html' )
 
 
     document.body.appendChild( mainContent );
+
+    document.getElementById( 'last-build-time' ).textContent = lastBuild;
   } );

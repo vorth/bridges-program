@@ -42,6 +42,8 @@ jobs:
       - name: Download official program
         run: |
           wget -O official-program.html https://www.bridgesmathart.org/b2025/bridges-2025-program/
+      - name: Record current time
+        run: echo 'export const lastBuild = "'$(date -u +'%Y-%m-%d %H:%M:%SZ')'";' > timestamp.js
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
