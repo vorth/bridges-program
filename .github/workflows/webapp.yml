@@ -40,6 +40,7 @@ jobs:
       - name: Download official program
         run: |
           wget -O official-program.html https://www.bridgesmathart.org/b2025/bridges-2025-program/
+          wget -O logo.png https://www.bridgesmathart.org/wp-content/uploads/2024/08/bridges-logo-full-red.png
       - name: Record current time
         run: echo 'export const lastBuild = "'$(date -u +'%Y-%m-%d %H:%M:%SZ')'";' > timestamp.js
       - name: Upload artifact
