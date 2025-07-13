@@ -48,7 +48,6 @@ fetch( './official-program.html' )
       const parallel = document.createElement('div');
       parallel.classList.add('parallel');
       const intro = document.createElement('div');
-      intro.textContent = 'Parallel Tracks';
 
       // Navigation buttons
       const nav = document.createElement('div');
@@ -72,7 +71,11 @@ fetch( './official-program.html' )
       // Track navigation logic
       const maxTrack = 5;
       let current = 0;
-      const showTrack = n => tracks.style.transform = `translateX(-${n}00%)`;
+      const showTrack = n => {
+        tracks.style.transform = `translateX(-${n}00%)`;
+        intro.textContent = `Parallel Tracks (${current + 1} of ${maxTrack + 1})`;
+      }
+      showTrack(current);
 
       const enableButtons = () => {
         leftBtn.disabled = current === 0;
