@@ -44,6 +44,9 @@
     .has-light-gray-background-color {
       background-color: #f1f1f1;
     }
+    .has-light-green-background-color {
+      background-color: #f3fde4;
+    }
 
     .toggle > .sessions {
       display: none;
@@ -87,28 +90,27 @@
       width: 96%;
       left: 0;
     }
-    .tracks > .active-track {
-      display: flex;
-      transform: translateX(0);
-      position: relative;
-      z-index: 2;
-    }
     .track-nav > div {
-      align-content: center;
+      justify-content: center;
+      display: flex;
+      grid-column-start: 1;
+      grid-column-end: 7;
     }
     .track-nav {
-      display: flex;
-      justify-content: space-between;
-      gap: 0.5em;
+      display: grid;
+      grid-template-columns: repeat(6,1fr);
       margin-bottom: 0.5em;
+      gap: 0.2em;
     }
-    .track-nav button {
+    .track-button {
       font-size: 1.2em;
-      background: #eee;
       border: 1px solid #ccc;
       border-radius: 3px;
       cursor: pointer;
-      padding: 0.2em 0.6em;
+      padding: 0.2em;
+    }
+    .selected-track-button {
+      border: 3px solid black;
     }
 
     .track ul {
