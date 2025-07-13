@@ -56,6 +56,7 @@ fetch( './official-program.html' )
       const leftBtn = document.createElement('button');
       leftBtn.innerHTML = '◀';
       leftBtn.className = 'track-left';
+      leftBtn.disabled = true;
       const rightBtn = document.createElement('button');
       rightBtn.innerHTML = '▶';
       rightBtn.className = 'track-right';
@@ -68,23 +69,31 @@ fetch( './official-program.html' )
       tracks.classList.add('tracks');
       parallel.appendChild(tracks);
 
-
       // Track navigation logic
+      const maxTrack = 5;
       let current = 0;
+      const showTrack = n => tracks.style.transform = `translateX(-${n}00%)`;
+
+      const enableButtons = () => {
+        leftBtn.disabled = current === 0;
+        rightBtn.disabled = current === maxTrack;
+      }
       leftBtn.addEventListener('click', e => {
         e.stopPropagation();
-        // showTrack(current - 1, -1);
+        if ( current > 0 ) {
+          current--;
+          showTrack(current);
+        }
+        enableButtons();
       });
       rightBtn.addEventListener('click', e => {
         e.stopPropagation();
-        // showTrack(current + 1, 1);
+        if ( current < maxTrack ) {
+          current++;
+          showTrack(current);
+        }
+        enableButtons();
       });
-
-      // Initial state
-      setTimeout(() => {
-        // updateTracksMinHeight();
-        // showTrack(0, 0);
-      }, 0);
 
       return parallel;
     }
