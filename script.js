@@ -106,9 +106,15 @@ const createProgram = text =>
           trackButton.classList.add( 'selected-track-button' );
         }
       }
-      if (heading.textContent.includes('Regular')) {
-        const talks = track.querySelectorAll('li');
-        for (const talk of talks) {
+      const talks = track.querySelectorAll('li');
+      for (const talk of talks) {
+        const firstChild = talk.firstChild;
+        if (
+          firstChild &&
+          firstChild.nodeType === Node.TEXT_NODE &&
+          firstChild.textContent.includes(':00') &&
+          firstChild.textContent.includes(':30')
+        ) {
           talk.classList.add('regular-talk');
         }
       }
