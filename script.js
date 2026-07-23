@@ -22,30 +22,28 @@ const createProgram = text =>
   const mainContent = doc.querySelector( 'main' );
 
   const schedule = doc.querySelector( 'main .entry-content' );
+  const closeOtherDays = evt => {
+    const thisDay = evt.target;
+    if ( !thisDay.open ) return;
+    for ( const day of document.querySelectorAll( '.day[open]' ) ) {
+      if ( day !== thisDay )
+        day.open = false;
+    }
+  }
   const newDay = (text) => {
-    const today = document.createElement( 'div' );
-    today.classList.add( 'day', 'toggle' );
-    const intro = document.createElement( 'div' );
+    const today = document.createElement( 'details' );
+    today.classList.add( 'day' );
+    today.addEventListener( 'toggle', closeOtherDays );
+    const intro = document.createElement( 'summary' );
     intro.textContent = text;
     intro.classList.add( 'day-heading' );
-    intro.addEventListener( 'click', toggleOpen );
     today.appendChild( intro );
     const sessions = document.createElement( 'div' );
     sessions.classList.add( 'sessions' );
     today.appendChild( sessions );
     return today;
   }
-  const toggleOpen = evt => {
-    evt.stopPropagation();
-    const thisToggle = evt.target.closest( '.toggle' );
-    const toggles = document.querySelectorAll( '.toggle' );
-    for ( const toggle of toggles ) {
-      if ( toggle !== thisToggle )
-        toggle.classList.remove( 'open' );
-    }
-    thisToggle.classList .toggle( 'open' );
-  }
-  document.getElementById( 'about' ) .addEventListener( 'click', toggleOpen );
+  document.getElementById( 'about' ) .addEventListener( 'toggle', closeOtherDays );
 
   let parallel = null;
   let nav = null;

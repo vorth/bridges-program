@@ -48,20 +48,21 @@
       background-color: #f3fde4;
     }
 
-    .toggle > .sessions {
-      display: none;
-    }
-    .open > .sessions {
+    .day[open] > .sessions {
       margin-top: 1em;
-      display: block;
+    }
+    .day-heading {
+      cursor: pointer;
+      list-style: none;
+    }
+    .day-heading::-webkit-details-marker {
+      display: none;
     }
     .day-heading::before {
       content: "▶ ";
-      cursor: pointer;
     }
-    .open > .day-heading::before {
+    .day[open] > .day-heading::before {
       content: "▼ ";
-      cursor: pointer;
     }
     .parallel {
       border: 1px solid lightgray;
@@ -142,13 +143,13 @@
   <script type="module" src="script.js"></script>
 </head>
 <body>
-  <div class="day toggle">
-    <div id="about" class="day-heading">About this App</div>
-    <div class="sessions toggled">
+  <details class="day" id="about">
+    <summary class="day-heading">About this App</summary>
+    <div class="sessions">
       <div class="wp-block-group sched_block has-background" style="background-color:#59c2a233">
         <div class="wp-block-group__inner-container is-layout-flow wp-block-group-is-layout-flow">
           <p>
-            This is a copy of the 
+            This is a copy of the
             <a href="https://www.bridgesmathart.org/b2026/bridges-2026-program/" target="_blank" rel="noopener noreferrer">official Bridges 2026 program</a>,
             but rearranged on the page for a better user experience.  This copy is updated from the official program at least once every six hours, and sometimes on demand.
             The last update was at <strong><span id="last-build-time"></span></strong>.
@@ -166,6 +167,6 @@
         </div>
       </div>
     </div>
-  </div>
+  </details>
 </body>
 </html>
